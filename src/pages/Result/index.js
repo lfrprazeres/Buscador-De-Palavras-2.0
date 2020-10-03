@@ -5,14 +5,23 @@ import createRegex from "../../utils/createRegex";
 
 function Result(props) {
   const history = useHistory();
+  const { state } = props.location;
   useEffect(() => {
-    if (!props.location.state) {
+    if (!state) {
       history.push("/");
     } else {
-      initMatchCalc();
+      const { text = "", words = "" } = state;
+      if (text.trim() !== "" && words.trim() !== "") {
+        initMatchCalc();
+      } else {
+        alert("Digite o texto e o que deseja pesquisar nele!");
+        setTimeout(() => {
+          history.push("/");
+        }, 1000);
+      }
     }
   }, []);
-  const { text, words, similarWords } = props.location.state;
+  const { text, words, similarWords } = state;
   const [responses, setResponses] = useState([]);
 
   function initMatchCalc() {

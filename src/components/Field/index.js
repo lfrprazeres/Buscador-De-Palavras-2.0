@@ -10,20 +10,19 @@ import { makeStyles } from "@material-ui/core/styles";
 import { TextArea } from "../MainText/style";
 
 export default function Field(props) {
-  const { value, onChangeWord, similarWords, onChangeSimilarWords } = props;
-
-  const useStyles = makeStyles((theme) => ({
-    root: {
-      background: "white",
-      marginRight: 15,
-      width: "100%",
-    },
-  }));
+  const {
+    value,
+    onChangeWord,
+    similarWords,
+    onChangeSimilarWords,
+    placeholder,
+  } = props;
 
   return (
     <Grid container spacing={3}>
       <Grid item xs={12} sm={8} container alignItems="center">
         <TextArea
+          placeholder={placeholder}
           value={value}
           onChange={(e) => onChangeWord(e.target.value)}
         />
