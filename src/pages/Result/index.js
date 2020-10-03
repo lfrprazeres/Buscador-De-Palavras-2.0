@@ -1,7 +1,10 @@
-import { Container, Content, Response } from "./style";
+import { Container, Content, Response, Charts } from "./style";
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import createRegex from "../../utils/createRegex";
+import { Doughnut, HorizontalBar } from "react-chartjs-2";
+import { AppBar, Tab, Tabs } from "@material-ui/core";
+import randomcolor from "randomcolor";
 
 function Result(props) {
   const history = useHistory();
@@ -23,6 +26,8 @@ function Result(props) {
   }, [history]);
   const { text, words, similarWords } = state;
   const [responses, setResponses] = useState([]);
+  const [typeResponse, setTypeResponse] = useState(0);
+  const [maxMatches, setMaxMatches] = useState(0);
 
   function initMatchCalc() {
     let textWords = text.split(" ");
@@ -32,12 +37,16 @@ function Result(props) {
       let searchWordLength = searchWord
         .split(" ")
         .filter((word) => word.trim() !== "").length;
-      if (searchWordLength === 1) {
+      if (searchWordLength === 1 && searchWord.trim() !== "") {
         response = handleMatchWord(searchWord, textWords);
-      } else {
+        setResponses((previousResponse) => [...previousResponse, response]);
+      } else if (searchWordLength > 1 && searchWord.trim() !== "") {
         response = handleMatchPhrase(searchWord, textWords);
+        setResponses((previousResponse) => [...previousResponse, response]);
       }
-      setResponses((previousResponse) => [...previousResponse, response]);
+      setMaxMatches((previousMatches) =>
+        response.matches > previousMatches ? response.matches : previousMatches
+      );
     });
   }
 
@@ -54,9 +63,11 @@ function Result(props) {
         .match(regex);
       if (match) matchesFind += 1;
     });
-    return `palavra "${word}" teve ${matchesFind} ${
-      matchesFind.lenghth > 1 ? " recorrências" : " recorrência"
-    }`;
+    return {
+      matches: matchesFind,
+      type: "word",
+      label: word,
+    };
   }
 
   function handleMatchPhrase(phrase, textWords) {
@@ -100,18 +111,104 @@ function Result(props) {
         }
       });
     });
-    return `frase "${phrase}" teve ${matchesFind} ${
-      matchesFind.lenghth > 1 ? " recorrências" : " recorrência"
-    }`;
+    return {
+      matches: matchesFind,
+      type: "phrase",
+      label: phrase,
+    };
+  }
+
+  function a11yProps(index) {
+    return {
+      id: `scrollable-auto-tab-${index}`,
+      "aria-controls": `scrollable-auto-tabpanel-${index}`,
+    };
+  }
+
+  function TabPanel(props) {
+    const { children, value, index, ...other } = props;
+
+    return (
+      <div
+        role="tabpanel"
+        hidden={value !== index}
+        id={`scrollable-auto-tabpanel-${index}`}
+        aria-labelledby={`scrollable-auto-tab-${index}`}
+        {...other}
+      >
+        {value === index && <>{children}</>}
+      </div>
+    );
   }
 
   return (
-    <Container>
-      <Content>
+    <Container container>
+      <AppBar>
+        <Tabs
+          value={typeResponse}
+          onChange={(event, newValue) => setTypeResponse(newValue)}
+        >
+          <Tab label="Escrita" {...a11yProps(0)} />
+          <Tab label="Gráficos" {...a11yProps(1)} />
+        </Tabs>
+      </AppBar>
+      <TabPanel value={typeResponse} index={0}>
         {responses.map((response, index) => (
-          <Response key={index}>{response}</Response>
+          <Response key={index}>
+            {response.type === "phrase" ? "frase " : "palavra "}
+            {response.label} teve {response.matches}
+            {response.matches.length > 1 ? " recorrências" : " recorrência"}`
+          </Response>
         ))}
-      </Content>
+      </TabPanel>
+      <TabPanel value={typeResponse} index={1} style={{ marginTop: 50 }}>
+        <HorizontalBar
+          data={{
+            datasets: [
+              {
+                data: responses.map((response) => response.matches),
+                backgroundColor: responses.map(() => randomcolor()),
+              },
+            ],
+            labels: responses.map((response) => response.label),
+          }}
+          width={window.innerWidth * 0.6}
+          height={window.innerHeight / 2}
+          options={{
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+              xAxes: [
+                {
+                  ticks: {
+                    stepSize: Math.ceil(maxMatches / 2),
+                    max: maxMatches,
+                  },
+                },
+              ],
+            },
+          }}
+        />
+        <Doughnut
+          data={{
+            datasets: [
+              {
+                data: responses.map((response) => response.matches),
+                backgroundColor: responses.map(() => randomcolor()),
+              },
+            ],
+            labels: responses.map((response) => response.label),
+          }}
+          width={window.innerWidth / 2}
+          height={window.innerHeight / 2}
+          options={{
+            responsive: true,
+            legend: {
+              display: false,
+            },
+          }}
+        />
+      </TabPanel>
     </Container>
   );
 }
