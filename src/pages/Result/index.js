@@ -12,7 +12,6 @@ function Result(props) {
       initMatchCalc();
     }
   }, []);
-  const [loading, setLoading] = useState(undefined);
   const { text, words, similarWords } = props.location.state;
   const [responses, setResponses] = useState([]);
 
@@ -48,7 +47,7 @@ function Result(props) {
       matchesCount += 1;
       if (match) matchesFind += 1;
     });
-    return `palavra ${word} teve ${matchesFind} ${
+    return `palavra "${word}" teve ${matchesFind} ${
       matchesFind.lenghth > 1 ? " recorrências" : " recorrência"
     }`;
   }
@@ -61,9 +60,8 @@ function Result(props) {
       .filter((word) => word.trim() !== "");
     let phraseLength = searchPhraseSplitted.length;
     //make regex for each phrase word
-    console.log("phrase: ", searchPhraseSplitted);
     searchPhraseSplitted.forEach((phraseWord, phraseIndex) => {
-      let regex = createRegex(phraseWord, similarWords);
+      let regex = createRegex(phraseWord, false);
       textWords.forEach((textWord, textWordIndex) => {
         let match = textWord
           .toLowerCase()
@@ -97,7 +95,7 @@ function Result(props) {
         }
       });
     });
-    return `frase ${phrase} teve ${matchesFind} ${
+    return `frase "${phrase}" teve ${matchesFind} ${
       matchesFind.lenghth > 1 ? " recorrências" : " recorrência"
     }`;
   }
