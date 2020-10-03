@@ -6,8 +6,8 @@ export default function Routes() {
   return (
     <Router>
       <Switch>
-        <Route exact path="/" component={App} />
-        <Route component={Result} path="/result" />
+        <Route exact path="/Buscador-De-Palavras-2.0" component={App} />
+        <Route component={Result} path="/Buscador-De-Palavras-2.0/result" />
       </Switch>
     </Router>
   );
