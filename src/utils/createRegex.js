@@ -20,7 +20,5 @@ export default function createRegex(text, keepSimilarWords) {
         .replace(/,./g, "")}[.,;!?]{0,}$`,
       "i"
     );
-  } catch (error) {
-    console.log("texto que deu erro: ", text);
-  }
+  } catch (e) {}
 }

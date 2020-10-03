@@ -56,11 +56,12 @@ function Result(props) {
   function handleMatchPhrase(phrase, textWords) {
     let matchesFind = 0;
     let matchesCount = 0;
-    let phraseLength = phrase.length;
     const searchPhraseSplitted = phrase
       .split(" ")
       .filter((word) => word.trim() !== "");
+    let phraseLength = searchPhraseSplitted.length;
     //make regex for each phrase word
+    console.log("phrase: ", searchPhraseSplitted);
     searchPhraseSplitted.forEach((phraseWord, phraseIndex) => {
       let regex = createRegex(phraseWord, similarWords);
       textWords.forEach((textWord, textWordIndex) => {
@@ -73,14 +74,14 @@ function Result(props) {
           .match(regex);
         matchesCount += 1;
         if (match) {
-          console.log("textWord: ", textWord);
-          console.log("phraseWord: ", phraseWord);
-          console.log("----------------------------------------");
           let currentMatch = 0;
           let keepMatching = true;
-          while (keepMatching) {
+          while (keepMatching && currentMatch <= phraseLength) {
             currentMatch += 1;
-            let newRegex = createRegex(phrase[currentMatch], similarWords);
+            let newRegex = createRegex(
+              searchPhraseSplitted[currentMatch],
+              similarWords
+            );
             let newMatch =
               textWords[textWordIndex + currentMatch] &&
               textWords[textWordIndex + currentMatch]
