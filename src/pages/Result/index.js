@@ -20,7 +20,7 @@ function Result(props) {
         }, 1000);
       }
     }
-  }, []);
+  }, [history]);
   const { text, words, similarWords } = state;
   const [responses, setResponses] = useState([]);
 
@@ -43,7 +43,6 @@ function Result(props) {
 
   function handleMatchWord(word, textWords) {
     let matchesFind = 0;
-    let matchesCount = 0;
     let regex = createRegex(word, similarWords);
     textWords.forEach((textWord) => {
       let match = textWord
@@ -53,7 +52,6 @@ function Result(props) {
         .replace(/[\u0300-\u036f]/g, "")
         .replace(/,./g, "")
         .match(regex);
-      matchesCount += 1;
       if (match) matchesFind += 1;
     });
     return `palavra "${word}" teve ${matchesFind} ${
@@ -63,7 +61,6 @@ function Result(props) {
 
   function handleMatchPhrase(phrase, textWords) {
     let matchesFind = 0;
-    let matchesCount = 0;
     const searchPhraseSplitted = phrase
       .split(" ")
       .filter((word) => word.trim() !== "");
@@ -79,7 +76,6 @@ function Result(props) {
           .replace(/[\u0300-\u036f]/g, "")
           .replace(/,./g, "")
           .match(regex);
-        matchesCount += 1;
         if (match) {
           let currentMatch = 0;
           let keepMatching = true;

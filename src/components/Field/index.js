@@ -1,12 +1,5 @@
 import React from "react";
-import {
-  Button,
-  Checkbox,
-  FormControlLabel,
-  Grid,
-  TextField,
-} from "@material-ui/core";
-import { makeStyles } from "@material-ui/core/styles";
+import { Checkbox, FormControlLabel, Grid } from "@material-ui/core";
 import { TextArea } from "../MainText/style";
 
 export default function Field(props) {
