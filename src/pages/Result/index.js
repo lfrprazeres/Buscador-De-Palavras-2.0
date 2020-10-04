@@ -1,9 +1,9 @@
-import { Container, Content, Response, Charts } from "./style";
+import { Container, Response } from "./style";
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import createRegex from "../../utils/createRegex";
 import { Doughnut, HorizontalBar } from "react-chartjs-2";
-import { AppBar, Tab, Tabs } from "@material-ui/core";
+import { AppBar, Tab, Tabs, Grid } from "@material-ui/core";
 import randomcolor from "randomcolor";
 
 function Result(props) {
@@ -39,10 +39,14 @@ function Result(props) {
         .filter((word) => word.trim() !== "").length;
       if (searchWordLength === 1 && searchWord.trim() !== "") {
         response = handleMatchWord(searchWord, textWords);
-        setResponses((previousResponse) => [...previousResponse, response]);
+        if (response.matches !== 0) {
+          setResponses((previousResponse) => [...previousResponse, response]);
+        }
       } else if (searchWordLength > 1 && searchWord.trim() !== "") {
         response = handleMatchPhrase(searchWord, textWords);
-        setResponses((previousResponse) => [...previousResponse, response]);
+        if (response.matches !== 0) {
+          setResponses((previousResponse) => [...previousResponse, response]);
+        }
       }
       setMaxMatches((previousMatches) =>
         response.matches > previousMatches ? response.matches : previousMatches
@@ -147,19 +151,25 @@ function Result(props) {
         <Tabs
           value={typeResponse}
           onChange={(event, newValue) => setTypeResponse(newValue)}
+          centered
+          indicatorColor="secondary"
         >
           <Tab label="Escrita" {...a11yProps(0)} />
           <Tab label="Gráficos" {...a11yProps(1)} />
         </Tabs>
       </AppBar>
       <TabPanel value={typeResponse} index={0}>
-        {responses.map((response, index) => (
-          <Response key={index}>
-            {response.type === "phrase" ? "frase " : "palavra "}
-            {response.label} teve {response.matches}
-            {response.matches.length > 1 ? " recorrências" : " recorrência"}`
-          </Response>
-        ))}
+        <Grid container spacing={1} style={{ margin: "0 -8px" }}>
+          {responses.map((response, index) => (
+            <Grid item xs={3}>
+              <Response key={index}>
+                {response.type === "phrase" ? "Frase " : "Palavra "}"
+                {response.label}" teve {response.matches}
+                {response.matches > 1 ? " recorrências" : " recorrência"}
+              </Response>
+            </Grid>
+          ))}
+        </Grid>
       </TabPanel>
       <TabPanel value={typeResponse} index={1} style={{ marginTop: 50 }}>
         <HorizontalBar
@@ -174,9 +184,13 @@ function Result(props) {
           }}
           width={window.innerWidth * 0.6}
           height={window.innerHeight / 2}
+          style={{ marginBottom: 50 }}
           options={{
             responsive: true,
             maintainAspectRatio: false,
+            legend: {
+              display: false,
+            },
             scales: {
               xAxes: [
                 {
@@ -203,9 +217,6 @@ function Result(props) {
           height={window.innerHeight / 2}
           options={{
             responsive: true,
-            legend: {
-              display: false,
-            },
           }}
         />
       </TabPanel>

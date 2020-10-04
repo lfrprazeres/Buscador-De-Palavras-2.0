@@ -19,4 +19,5 @@ export const Response = styled.div`
   color: white;
   margin: 10px;
   padding: 10px;
+  min-width: 300px;
 `;
