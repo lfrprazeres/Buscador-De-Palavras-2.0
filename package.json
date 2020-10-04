@@ -1,6 +1,8 @@
 {
   "name": "buscador-de-palavras-in-react",
   "version": "0.1.0",
+  "homepage": "https://lfrprazeres.github.io/Quiz-Creator/",
+  "author": "Luiz Fernando Ribeiro dos Prazeres",
   "private": true,
   "dependencies": {
     "@material-ui/core": "^4.11.0",
