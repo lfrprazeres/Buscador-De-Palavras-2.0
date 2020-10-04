@@ -1,23 +1,23 @@
 {
   "files": {
-    "main.css": "/static/css/main.93fc025e.chunk.css",
-    "main.js": "/static/js/main.b7b3db51.chunk.js",
-    "main.js.map": "/static/js/main.b7b3db51.chunk.js.map",
-    "runtime-main.js": "/static/js/runtime-main.87678d3b.js",
-    "runtime-main.js.map": "/static/js/runtime-main.87678d3b.js.map",
-    "static/js/2.6bc262c2.chunk.js": "/static/js/2.6bc262c2.chunk.js",
-    "static/js/2.6bc262c2.chunk.js.map": "/static/js/2.6bc262c2.chunk.js.map",
-    "index.html": "/index.html",
-    "precache-manifest.0888af6cedf129a120e1262ff7e921b2.js": "/precache-manifest.0888af6cedf129a120e1262ff7e921b2.js",
-    "service-worker.js": "/service-worker.js",
-    "static/css/main.93fc025e.chunk.css.map": "/static/css/main.93fc025e.chunk.css.map",
-    "static/js/2.6bc262c2.chunk.js.LICENSE.txt": "/static/js/2.6bc262c2.chunk.js.LICENSE.txt",
-    "static/media/index.css": "/static/media/wave.92235ad1.svg"
+    "main.css": "/Buscador-De-Palavras-2.0/static/css/main.356514ff.chunk.css",
+    "main.js": "/Buscador-De-Palavras-2.0/static/js/main.b7b3db51.chunk.js",
+    "main.js.map": "/Buscador-De-Palavras-2.0/static/js/main.b7b3db51.chunk.js.map",
+    "runtime-main.js": "/Buscador-De-Palavras-2.0/static/js/runtime-main.b8242a7f.js",
+    "runtime-main.js.map": "/Buscador-De-Palavras-2.0/static/js/runtime-main.b8242a7f.js.map",
+    "static/js/2.51a71f9b.chunk.js": "/Buscador-De-Palavras-2.0/static/js/2.51a71f9b.chunk.js",
+    "static/js/2.51a71f9b.chunk.js.map": "/Buscador-De-Palavras-2.0/static/js/2.51a71f9b.chunk.js.map",
+    "index.html": "/Buscador-De-Palavras-2.0/index.html",
+    "precache-manifest.4b9561e753d1c430abc18b31bf96fffb.js": "/Buscador-De-Palavras-2.0/precache-manifest.4b9561e753d1c430abc18b31bf96fffb.js",
+    "service-worker.js": "/Buscador-De-Palavras-2.0/service-worker.js",
+    "static/css/main.356514ff.chunk.css.map": "/Buscador-De-Palavras-2.0/static/css/main.356514ff.chunk.css.map",
+    "static/js/2.51a71f9b.chunk.js.LICENSE.txt": "/Buscador-De-Palavras-2.0/static/js/2.51a71f9b.chunk.js.LICENSE.txt",
+    "static/media/index.css": "/Buscador-De-Palavras-2.0/static/media/wave.92235ad1.svg"
   },
   "entrypoints": [
-    "static/js/runtime-main.87678d3b.js",
-    "static/js/2.6bc262c2.chunk.js",
-    "static/css/main.93fc025e.chunk.css",
+    "static/js/runtime-main.b8242a7f.js",
+    "static/js/2.51a71f9b.chunk.js",
+    "static/css/main.356514ff.chunk.css",
     "static/js/main.b7b3db51.chunk.js"
   ]
 }
